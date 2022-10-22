@@ -13,15 +13,28 @@ let techs = [
     'node',
     'react',
     
-];
-let cardsPairs = createCardsFromTechs(techs);
-populate(cardsPairs);
-function populate(cardsPairs) {
-    const totalCards = Object.keys(cardsPairs).length;
-    const randomNumber = parseInt(Math.random() * totalCards);
-    const cardSelected = cardsPairs[randomNumber];
-    console.log(cardSelected);
-     
+]
+
+let cards = null;
+
+startGame();
+
+function startGame() {
+    cards = createCardsFromTechs(techs);
+    shuffleCards(cards);
+    console.log(cards);
+}
+
+function shuffleCards(cards) {
+    let currentIndex = cards.length;
+    let randomIndex = 0;
+
+    while(currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        [cards[randomIndex], cards[currentIndex]] = [cards[currentIndex], cards[randomIndex]]
+    }
 }
 
 function createCardsFromTechs(techs) {
@@ -29,11 +42,7 @@ function createCardsFromTechs(techs) {
     for(let tech of techs) {
         cards.push(createPairFromTech(tech));
     } 
-    return cards.flatMap(function devolverDoisArrays(pair) {
-         return pair[0];
-        } );
-
-    
+    return cards.flatMap(pair => pair);
 }
 
 function createPairFromTech(tech) {
@@ -47,22 +56,6 @@ function createPairFromTech(tech) {
         flipped: false,
     }]
 }
-
-
-
-
-
-    n1 => n1 + 2
-
-
-
-function mult(m1, m2) {
-    let result = (m1) => m1 + 4 * soma(m1, m2);
-    return result
-}
-
-console.log(mult(2, 5));
-
 
 function creatIdWithTech(tech) {
     return parseInt(Math.random() * 1000);
