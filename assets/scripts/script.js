@@ -4,33 +4,15 @@ const BACK  = "card_back"
 const CARD  = "card"
 const ICON  = "icon"
 
-let techs = [
-    'bootstrap',
-    'css',
-    'electron',
-    'firebase',
-    'html',
-    'javascript',
-    'jquery',
-    'mongo',
-    'node',
-    'react',
-    
-]
-
-let cards = null;
-
 startGame();
 
 function startGame() {
-    cards = createCardsFromTechs(techs);
-    shuffleCards(cards);
-    initializeCards(cards);
+    initializeCards(game.createCardsFromTechs());
 }
 
 function initializeCards(cards) {
     let gameBoard = document.getElementById("gameBoard");
-    cards.forEach(card => {
+    game.cards.forEach(card => {
         let cardElement = document.createElement('div');
         cardElement.id = card.id;
         cardElement.classList.add(CARD);
@@ -59,42 +41,6 @@ function createCardFace(face, card, element) {
     }
     element.appendChild(cardElementFace);
     
-}
-
-function shuffleCards(cards) {
-    let currentIndex = cards.length;
-    let randomIndex = 0;
-
-    while(currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex--;
-
-        [cards[randomIndex], cards[currentIndex]] = [cards[currentIndex], cards[randomIndex]]
-    }
-}
-
-function createCardsFromTechs(techs) {
-    let cards = [];
-    for(let tech of techs) {
-        cards.push(createPairFromTech(tech));
-    } 
-    return cards.flatMap(pair => pair);
-}
-
-function createPairFromTech(tech) {
-    return [{
-        id: creatIdWithTech(tech),
-        icon: tech,
-        flipped: false,
-    }, {
-        id: creatIdWithTech(tech),
-        icon: tech,
-        flipped: false,
-    }]
-}
-
-function creatIdWithTech(tech) {
-    return parseInt(Math.random() * 1000);
 }
 
 function flipCard() {
