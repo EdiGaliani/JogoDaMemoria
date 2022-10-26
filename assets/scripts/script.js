@@ -42,23 +42,25 @@ function createCardFace(face, card, element) {
     element.appendChild(cardElementFace);
     
 }
-
+//debugger
 function flipCard() {
     if(game.setCard(this.id)) {
         this.classList.add("flip");
-        if(game.checkMatch()) {
-            game.clearCards();
-        }else {
-            setTimeout(() => {
-                if (game.secondCard !== null) {
-                    let firstCardView = document.getElementById(game.firstCard.id);
-                    firstCardView.classList.remove('flip');    
-                    let secondCardView = document.getElementById(game.secondCard.id);
-                    secondCardView.classList.remove('flip');
-                    game.clearCards();
-                }
-            }, 1000);
-        };
+        if(game.secondCard) {
+            if(game.checkMatch()) {
+                game.clearCards();
+            }else {
+                setTimeout(() => {
+                    if (game.secondCard !== null) {
+                        let firstCardView = document.getElementById(game.firstCard.id);
+                        firstCardView.classList.remove('flip');    
+                        let secondCardView = document.getElementById(game.secondCard.id);
+                        secondCardView.classList.remove('flip');
+                        game.unflipCards();
+                    }
+                }, 1000);
+            };
+        }
     }
     
 }

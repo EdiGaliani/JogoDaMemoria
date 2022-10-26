@@ -6,33 +6,35 @@ let game = {
 
     setCard: function(id) {
         let card = this.cards.filter(card => card.id === Number(id))[0];
-        // let card = null
-
-        // for (let x = 0; x < this.cards.length; x++) {
-        //     if (this.cards[x].id === Number(id)) {
-        //         card = this.cards[x]
-        //     }
-        // }
+        console.log(card)
+        /* for(let card of this.cards) {
+            if(card.id === id) {
+                return card;
+            }
+        } */
         
+        //card = this.card.id === id;
+        console.log(card);
+        console.log(typeof card);
         if(card.flipped || this.lockMode) {
             return false;
         }
-
-        const setCard = { id: card.id, icon: card.icon };
-      //  this.firstCard  = (!this.firstCard) ?  setCard : this.firstCard
-      
-       
         if(!this.firstCard) {
-            this.firstCard = { id: card.id, icon: card.icon }  
-        } else {
-            this.secondCard = {id: card.id, icon: card.icon }
+            this.firstCard = card;
+            this.firstCard.flipped = true;
+            return true;
+        }else {
+            this.secondCard = card;
+            this.secondCard.flipped = true;
             this.lockMode = true;
+            return true;
         }
-        return true;
     },
 
     checkMatch: function () {
-        if ( this.firstCard === null || this.secondCard === null ) return false;
+        if(!this.firstCard || !this.secondCard) {
+            return false;
+        }
         return this.firstCard.icon === this.secondCard.icon;
     },
 
@@ -40,6 +42,12 @@ let game = {
         this.firstCard = null;
         this.secondCard = null;
         this.lockMode = false;
+    },
+
+    unflipCards: function() {
+        this.firstCard.flipped = false;
+        this.secondCard.flipped = false;
+        this.clearCards();
     },
     
     techs: [
